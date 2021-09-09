@@ -1,9 +1,9 @@
 package com.company;
 
-public class ManyThread implements Runnable{
+public class ManyThreads implements Runnable{
     String []mass=new String[20000000];
     int min,max;
-    public ManyThread(int min ,int max) {
+    public ManyThreads(int min , int max) {
         this.max = max;
         this.min = min;
     }

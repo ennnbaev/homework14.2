@@ -2,29 +2,35 @@ package com.company;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-		LocalDateTime start=LocalDateTime.now();
+    	//Засекаю время и запускаю один поток
+    	LocalDateTime start=LocalDateTime.now();
 	Thread result=new Thread(new OneThread());
 	result.start();
 	result.join();
 		LocalDateTime end=LocalDateTime.now();
-		Duration duration=Duration.between(start,end);
-		System.out.println(duration.toMillis());
-
+		Duration durationOneThread=Duration.between(start,end);
+		System.out.println(durationOneThread.toMillis());
+       //Засекаю время и запускаю 4 потока
 		LocalDateTime start2=LocalDateTime.now();
+		List<Thread>thread=new ArrayList<>();
 		int begin=0;
-		Thread thread = null;
 		for (int i=0;i<4;i++){
-			thread=new Thread(new ManyThread(begin,begin+=5000000));
-			thread.start();
+			thread.add(new Thread(new ManyThreads(begin,begin+=5000000)));
+			thread.get(i).start();
 		}
-		thread.join();
-		LocalDateTime en2=LocalDateTime.now();
-		Duration duration2=Duration.between(start2,en2);
-		System.out.println(duration2.toMillis());
+        for (int i=0;i<4;i++){
+	     thread.get(i).join();
+
+        }
+		LocalDateTime end2=LocalDateTime.now();
+		Duration durationManyThreads=Duration.between(start2,end2);
+		System.out.println(durationManyThreads.toMillis());
 
     }
     static void inputMass(String[]mass,int i){
