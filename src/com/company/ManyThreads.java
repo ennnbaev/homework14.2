@@ -10,7 +10,7 @@ public class ManyThreads implements Runnable{
 
     @Override
     public void run() {
-        for (int i=min;i< max;i++){
+        for (int i=min;i<max;i++){
             Main.inputMass(mass,i);
         }
     }
